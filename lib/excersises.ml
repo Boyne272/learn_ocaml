@@ -34,12 +34,34 @@ let%test "last_two short" = last_two ["a"] = None
 
 
 (* N'th element of a list *)
-let rec nth lst i = 
+(* let rec nth lst i = 
   match lst, i with
   ([], _) -> None
   | (h :: _, 0) -> Some h
-  | (_ :: t, _) -> nth t (i-1)
+  | (_ :: t, _) -> nth t (i-1) *)
+let rec nth = function
+  ([], _) -> None
+  | (h :: _, 0) -> Some h
+  | (_ :: t, i) -> nth (t, (i-1))
 
-let%test "nth happy" = nth ["a"; "b"; "c"; "d"; "e"] 2 = Some "c"
-let%test "nth empty" = nth [] 2 = None
-let%test "nth short" = nth ["a"] 2 = None
+let%test "nth happy" = nth (["a"; "b"; "c"; "d"; "e"], 2) = Some "c"
+let%test "nth empty" = nth ([], 2) = None
+let%test "nth short" = nth (["a"], 2) = None
+
+
+(* Length of a list *)
+let rec length lst = 
+  match lst with
+  | [] -> 0
+  | _ :: t -> 1 + length t
+let%test "length happy" = length ["a"; "b"; "c"] = 3
+let%test "length empty" = length [] = 0
+
+
+(* Reverse a list *)
+let rec rev lst = 
+  match lst with
+  | [] -> []
+  | h :: t -> rev t @ [h]
+let%test "reverse happy" = rev ["a"; "b"; "c"] = ["c"; "b"; "a"]
+let%test "reverse empty" = rev [] = []
