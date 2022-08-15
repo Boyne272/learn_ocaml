@@ -65,3 +65,10 @@ let rec rev lst =
   | h :: t -> rev t @ [h]
 let%test "reverse happy" = rev ["a"; "b"; "c"] = ["c"; "b"; "a"]
 let%test "reverse empty" = rev [] = []
+
+
+(* Palindrome *)
+let is_palindrome lst = rev lst = lst
+let%test "is_palindrome pass" = is_palindrome ["x"; "a"; "m"; "a"; "x"] = true
+let%test "is_palindrome fail" = is_palindrome ["a"; "b"] = false
+let%test "is_palindrome empty" = is_palindrome [] = true
