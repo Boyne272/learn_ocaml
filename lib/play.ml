@@ -27,14 +27,16 @@ exception Empty_list
 (* raising exception & match function *)
 let head = function
     [] -> raise Empty_list
-  | hd :: _ -> hd
+  | hd :: _ -> hd;;
 
 (* exception catching with try *)
-let opt_head lst = try (head lst) with Empty_list -> "ha ha"
+let opt_head lst = try (head lst) with Empty_list -> "ha ha";;
+
+(* exception catching with pattern matching *)
 let default_head lst def = 
   match (head lst) with
     exception Empty_list -> def
-  | v -> v
+  | v -> v;;
 
 let l = ["maya"; "hee"; "maya"; "hoo";]
 let%test "test head" = head l = "maya"
